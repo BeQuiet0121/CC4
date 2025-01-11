@@ -1,0 +1,83 @@
+public class QuickSortRewritten {
+
+    // Global counter for tracking operations
+    static int operationCount = 0;
+
+    public static void main(String[] args) {
+        // Initialize array with 1000 random single-digit integers
+        int[] array = generateRandomArray(1000, 10);
+
+        System.out.println("Original Array:");
+        displayArray(array);
+
+        // Sort array using QuickSort
+        quickSort(array, 0, array.length - 1);
+
+        System.out.println("\nSorted Array:");
+        displayArray(array);
+
+        // Print the total number of operations
+        System.out.println("\nTotal operations: " + operationCount);
+    }
+
+    // Method to generate an array with random integers
+    public static int[] generateRandomArray(int size, int maxValue) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            operationCount++; // Count each loop iteration
+            array[i] = (int) (Math.random() * maxValue); // Generate random numbers from 0 to 9
+        }
+        return array;
+    }
+
+    // QuickSort implementation
+    public static void quickSort(int[] array, int low, int high) {
+        if (low < high) {
+            operationCount++; // Count each recursive call
+
+            // Partition the array
+            int pivotIndex = partition(array, low, high);
+
+            // Recursively sort the partitions
+            quickSort(array, low, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, high);
+        }
+    }
+
+    // Partition method for QuickSort
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            operationCount++; // Count each loop iteration
+            operationCount++; // Count comparison
+
+            if (array[j] <= pivot) {
+                i++;
+                swap(array, i, j);
+            }
+        }
+
+        swap(array, i + 1, high);
+        return i + 1;
+    }
+
+    // Swap two elements in the array
+    public static void swap(int[] array, int i, int j) {
+        operationCount++; // Count each swap
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    // Display the contents of an array
+    public static void displayArray(int[] array) {
+        for (int num : array) {
+            operationCount++; // Count each loop iteration
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+}
+
